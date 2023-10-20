@@ -6,4 +6,9 @@
 
 .btn-grid { 
     min-width: 70px;
+    font-size: 1em;
+    line-height: 1;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-radius: 0.375em;
 }
