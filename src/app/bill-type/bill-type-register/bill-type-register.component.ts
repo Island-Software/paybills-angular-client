@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
@@ -11,7 +11,7 @@ import { BillTypesService } from '../../services/bill-types.service';
 })
 export class BillTypeRegisterComponent implements OnInit {
   @Output() addBillTypeEvent = new EventEmitter<boolean>();
-  newBillTypeForm!: FormGroup;
+  newBillTypeForm!: UntypedFormGroup;
 
   constructor(private billTypeService: BillTypesService,
     private toastrService: ToastrService) { }
@@ -21,9 +21,9 @@ export class BillTypeRegisterComponent implements OnInit {
   }
 
   initializeForm() {
-    this.newBillTypeForm = new FormGroup({
-      description: new FormControl('', Validators.required),
-      active: new FormControl(true)
+    this.newBillTypeForm = new UntypedFormGroup({
+      description: new UntypedFormControl('', Validators.required),
+      active: new UntypedFormControl(true)
     });
   }
 

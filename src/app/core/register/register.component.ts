@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../services/account.service';
 
@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   // Property to send data to parent component
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
-  newUserForm!: FormGroup;
+  newUserForm!: UntypedFormGroup;
 
   constructor(private accountService: AccountService, 
     private toastrService: ToastrService) { }
@@ -24,9 +24,9 @@ export class RegisterComponent implements OnInit {
   }
 
   initializeForm() {
-    this.newUserForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)])
+    this.newUserForm = new UntypedFormGroup({
+      username: new UntypedFormControl('', Validators.required),
+      password: new UntypedFormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)])
     })
   }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MONTHS } from '../../consts/months';
 import { BillType } from '../../models/bill-type';
@@ -15,7 +15,7 @@ export class BillRegisterComponent implements OnInit {
   @Output() saveBillEvent = new EventEmitter<boolean>();
   billTypes: BillType[] = [];
   // Reactive forms
-  newBillForm!: FormGroup;
+  newBillForm!: UntypedFormGroup;
   months = MONTHS;
 
   constructor(private billsService: BillsService,
@@ -34,11 +34,11 @@ export class BillRegisterComponent implements OnInit {
   }
 
   initializeForm() {
-    this.newBillForm = new FormGroup({
-      typeId: new FormControl('', Validators.required),
-      value: new FormControl('', Validators.required),
-      month: new FormControl('', Validators.required),
-      year: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)])
+    this.newBillForm = new UntypedFormGroup({
+      typeId: new UntypedFormControl('', Validators.required),
+      value: new UntypedFormControl('', Validators.required),
+      month: new UntypedFormControl('', Validators.required),
+      year: new UntypedFormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)])
     })
   }
 
