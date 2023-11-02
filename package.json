@@ -25,7 +25,6 @@
     "bootswatch": "^5.0.2",
     "font-awesome": "^4.7.0",
     "ngx-bootstrap": "^11.0.0",
-    "ngx-currency": "^4.0.0",
     "ngx-toastr": "^17.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
