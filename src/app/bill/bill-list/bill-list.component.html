@@ -3,14 +3,14 @@
   <div class="d-flex ml-2 mr-2 mb-4">
     <div class="d-flex justify-content-start">
       <span class="input-group-text">Month</span>
-      <select id="month" class="form-control mr-2" style="width: 120px;" [(ngModel)]="selectedMonth"
+      <select id="month" class="form-control mr-2 rounded" style="width: 100px;" [(ngModel)]="selectedMonth"
         (change)="onFilterMonth()">
-        <option value="">--- Select month ---</option>
-        <option *ngFor="let month of months" [value]="month.id">{{month.name}}</option>
+        <option value="" [disabled]="true">--- Select month ---</option>
+        <option  *ngFor="let month of months" [value]="month.id">{{month.name}}</option>
       </select>
 
       <span class="input-group-text">Year</span>
-      <input type="text" name="year" id="year" class="form-control" style="width: 60px;" [(ngModel)]="selectedYear"
+      <input type="text" name="year" id="year" class="form-control rounded" style="width: 60px;" [(ngModel)]="selectedYear"
         (keyup)="onFilterYear()">
 
     </div>
@@ -28,7 +28,7 @@
   <div class="row mt-1 ml-2 mr-2">
     <table class="table table-bordered table-striped table-hover mb-2 bg-body rounded">
       <thead>
-        <tr>
+        <tr style="text-align: center;">
           <th [width]=350>Description</th>
           <th [width]=150>Value</th>
           <th></th>
@@ -65,7 +65,7 @@
       <label for="items-per-page"></label> Items per page:
     </div>
     <div class="p-2 bd-highlight">
-      <select id="items-per-page" [(ngModel)]="pageSize" (ngModelChange)="loadUser()" class="form-select"
+      <select id="items-per-page" [(ngModel)]="pageSize" (ngModelChange)="loadUser()" class="form-select rounded"
         aria-label="Select items per page">
         <option value="5">5</option>
         <option value="10">10</option>
