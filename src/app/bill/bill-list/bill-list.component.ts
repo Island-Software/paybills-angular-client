@@ -29,33 +29,31 @@ export class BillListComponent implements OnInit {
   faCopy = faCopy;
 
   constructor(private billsService: BillsService, private modalService: BsModalService,
-      private toastrServie: ToastrService) {
+    private toastrServie: ToastrService) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
     this.loading = false;
   }
 
   ngOnInit(): void {
-    this.loadUser();    
-  }  
+    this.loadUser();
+  }
 
   pageChanged(event: any) {
     this.pageNumber = event.page;
     this.loadUser();
   }
 
-  openModalForEdit(template: TemplateRef<any>, billToEdit: Bill)
-  {
-    this.selectedBill = billToEdit;    
+  openModalForEdit(template: TemplateRef<any>, billToEdit: Bill) {
+    this.selectedBill = billToEdit;
     this.modalRef = this.modalService.show(template);
   }
 
-  openModal(template: TemplateRef<any>) {    
+  openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
-  closeModal(value: boolean)
-  {    
+  closeModal(value: boolean) {
     this.modalRef.hide();
     if (value)
       this.loadUser();
@@ -63,7 +61,7 @@ export class BillListComponent implements OnInit {
 
   loadUser() {
     this.loading = true;
-    this.username = JSON.parse(localStorage.getItem('user')!).username;    
+    this.username = JSON.parse(localStorage.getItem('user')!).username;
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumber, this.pageSize).subscribe(bills => {
       this.bills = bills.result;
       this.pagination = bills.pagination;
@@ -72,10 +70,12 @@ export class BillListComponent implements OnInit {
   }
 
   delete(bill: Bill) {
-    this.billsService.deleteBill(bill).subscribe(_ => this.loadUser());
+    if (confirm("Are you sure to delete " + bill.billType.description + "?")) {
+      this.billsService.deleteBill(bill).subscribe(_ => this.loadUser());
+    }
   }
 
-  onFilterMonth() {    
+  onFilterMonth() {
     this.loadUser();
   }
 
@@ -85,8 +85,16 @@ export class BillListComponent implements OnInit {
   }
 
   copyBills() {
-    this.billsService.copyBills(this.selectedMonth, this.selectedYear).subscribe( _ => {
-      this.toastrServie.success("Bills copied successfuly");
-    });
+    if (confirm("Do you want to copy all bills from this month to the next?")) {
+      this.billsService.copyBills(this.selectedMonth, this.selectedYear).subscribe(_ => {
+        this.toastrServie.success("Bills copied successfuly");
+      });
+    }
+  }
+
+  clickMethod(name: string) {
+    if (confirm("Are you sure to delete " + name)) {
+      console.log("Implement delete functionality here");
+    }
   }
 }
