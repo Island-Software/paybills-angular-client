@@ -5,10 +5,13 @@
 }
 
 .btn-grid { 
-    min-width: 70px;
+    min-width: 40px;
+    min-height: 30px;
     font-size: 1em;
     line-height: 1;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    border-radius: 0.375em;
+    vertical-align: middle;
+    justify-self: end;
+    /* padding-top: 0.5em; */
+    /* padding-bottom: 0.5em; */
+    /* border-radius: 0.375em; */
 }

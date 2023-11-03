@@ -5,6 +5,7 @@ import { BillsService } from '../../services/bills.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MONTHS } from 'src/app/consts/months';
 import { ToastrService } from 'ngx-toastr';
+import { faCopy, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-bill-list',
@@ -16,13 +17,16 @@ export class BillListComponent implements OnInit {
   selectedBill?: Bill;
   pagination: Pagination | undefined;
   pageNumber = 1;
-  pageSize = 5;
+  pageSize = 10;
   username: string = '';
   modalRef!: BsModalRef;
   months = MONTHS;
   selectedMonth: number;
   selectedYear: number;
   loading: boolean;
+  faDelete = faTrashCan;
+  faAdd = faSquarePlus;
+  faCopy = faCopy;
 
   constructor(private billsService: BillsService, private modalService: BsModalService,
       private toastrServie: ToastrService) {

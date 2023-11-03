@@ -18,9 +18,17 @@
       <div class="invalid-feedback">Please select a type</div>
     </div>
 
-    <app-text-input [formControl]='newBillForm.controls["value"]' [label]='"Value"'></app-text-input>
+    <input 
+        type="number" 
+        step="0.01" 
+        placeholder="0.00" 
+        class="form-control" 
+        name="value" 
+        id="value" 
+        required 
+        [formControl]='newBillForm.controls["value"]' >
 
-    <div class="form-group">
+    <div class="form-group" style="padding-top: 15px;">
       <div class="input-group">
         <select [class.is-invalid]='newBillForm.get("month")?.errors && newBillForm.get("month")?.touched'
           class="form-control mr-2" formControlName="month">

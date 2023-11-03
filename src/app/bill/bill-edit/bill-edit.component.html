@@ -22,4 +22,5 @@
       <button class="btn btn-primary mr-1 mt-3" type="submit" [disabled]="!billForm.valid">Save</button>
       <button type="button" class="btn btn-secondary mt-3" (click)="close()">Cancel</button>
     </form>    
+  {{billForm | json}}
   </div>

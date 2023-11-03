@@ -3,6 +3,7 @@ import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-bill-type-list',
@@ -16,6 +17,7 @@ export class BillTypeListComponent implements OnInit {
   selectedBillType?: BillType;
   modalRef!: BsModalRef;
   loading: boolean;
+  faDelete = faTrashCan;
   
   constructor(private billTypeService: BillTypesService, 
     private modalService: BsModalService,

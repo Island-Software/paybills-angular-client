@@ -28,8 +28,21 @@ import { BillTypeRegisterComponent } from './bill-type/bill-type-register/bill-t
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BillEditComponent } from './bill/bill-edit/bill-edit.component';
 import { PasswordInputComponent } from './forms/password-input/password-input.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
+  imports: [
+    BrowserModule,    
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    SharedModule,
+    ModalModule.forRoot(),
+    ReactiveFormsModule,
+    NgbModule,
+    FontAwesomeModule
+  ],
   declarations: [
     AppComponent,
     NavComponent,
@@ -46,17 +59,6 @@ import { PasswordInputComponent } from './forms/password-input/password-input.co
     BillTypeRegisterComponent,
     BillEditComponent,
     PasswordInputComponent
-  ],
-  imports: [
-    BrowserModule,    
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    SharedModule,
-    ModalModule.forRoot(),
-    ReactiveFormsModule,
-    NgbModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

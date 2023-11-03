@@ -18,9 +18,7 @@ export class BillRegisterComponent implements OnInit {
   newBillForm!: UntypedFormGroup;
   months = MONTHS;
 
-  constructor(private billsService: BillsService,
-    private billTypesService: BillTypesService,
-    private toastrService: ToastrService) { }
+  constructor(private billsService: BillsService, private billTypesService: BillTypesService, private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -37,8 +35,8 @@ export class BillRegisterComponent implements OnInit {
     this.newBillForm = new UntypedFormGroup({
       typeId: new UntypedFormControl('', Validators.required),
       value: new UntypedFormControl('', Validators.required),
-      month: new UntypedFormControl('', Validators.required),
-      year: new UntypedFormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)])
+      month: new UntypedFormControl(new Date().getMonth() + 1, Validators.required),
+      year: new UntypedFormControl(new Date().getFullYear(), [Validators.required, Validators.minLength(4), Validators.maxLength(4)])
     })
   }
 
