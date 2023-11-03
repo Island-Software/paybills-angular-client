@@ -1,5 +1,6 @@
 // import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +12,10 @@ export class HomeComponent implements OnInit {
   // users: any;
 
   // constructor(private http: HttpClient) { }
-  constructor() { }
+  constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.accountService.currentUser$.subscribe(user => console.log(user));
     // this.getUsers();
   }
 

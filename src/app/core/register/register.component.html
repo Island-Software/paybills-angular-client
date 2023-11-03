@@ -2,9 +2,7 @@
     <h2 class="text-center text-primary">Sign up!</h2>
     <hr>
     <div class="form-group">
-        <!-- <input type="text" class="form-control" name="username" [(ngModel)]="model.username" placeholder="Username"> -->
         <app-text-input [formControl]='newUserForm.controls["username"]' [label]='"User name"'></app-text-input>
-        <!-- <input type="password" class="form-control mt-2" name="password" [(ngModel)]="model.password" placeholder="Password"> -->
         <app-password-input [formControl]='newUserForm.controls["password"]' [label]='"Password"'></app-password-input>
     </div>
 
