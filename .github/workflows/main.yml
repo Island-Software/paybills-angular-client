@@ -5,13 +5,33 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
     - name: install dependencies
       run: npm install
+    - name: install angular
+      run: npm install -g @angular/cli
     - name: build
       run: ng build
-    - name: copy to destination
-      run: cp -R dist/paybills-client/* /var/www/paybills/wwwroot
+    - uses: actions/upload-artifact@master
+      with:
+        name: paybills-client
+        path: dist/paybills-client
+    # - name: copy to destination
+      # run: cp -R dist/paybills-client/* /var/www/paybills/wwwroot
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/download-artifact@master
+      with:
+        name: paybills-client
+        path: /var/www/paybills/wwwroot
+      
