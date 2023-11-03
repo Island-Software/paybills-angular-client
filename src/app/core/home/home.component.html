@@ -1,17 +1,20 @@
-<div class="container mt-5">
+<div class="container-fluid mt-5" >
     <div *ngIf="!registerMode" style="text-align: center;">
         <h1>PayBills - Financial Control App</h1>
         <p class="lead">Input your bills and control the payment status</p>
-        <p class="lead">Login above or click on register below!</p>
-        <div class="text-center">
-            <button (click)="registerToggle()" class="btn btn-primary btn-lg mr-2">Register</button>
-            <button class="btn btn-secondary btn-lg">Learn more</button>
-        </div>
+        <ng-container *ngIf="(accountService.currentUser$ | async) == null">
+            <p class="lead">Login above or click on register below!</p>
+            <div class="text-center">
+                <button (click)="registerToggle()" class="btn btn-primary btn-lg mr-2">Register</button>
+                <button class="btn btn-secondary btn-lg">Learn more</button>
+            </div>
+
+        </ng-container>
     </div>
 
     <div *ngIf="registerMode" class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-4"> 
+        <div class="row justify-content-center" >
+            <div style="max-width: fit-content;"> 
                 <!--  Child to parent communication -->
                 <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
                 <!-- Parent to child communication -->
