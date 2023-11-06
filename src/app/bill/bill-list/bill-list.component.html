@@ -26,16 +26,19 @@
   </div>
 
   <div class="row mt-1 ml-2 mr-2">
-    <table class="table table-bordered table-striped table-hover mb-2 bg-body rounded">
-      <thead>
+
+    <table class="table table-hover mb-2 rounded ">
+      <caption style="text-align: right;">Total: {{total | currency:"R$ "}}</caption>
+      <thead class="thead-dark">
         <tr style="text-align: center;">
-          <th [width]=350>Description</th>
-          <th [width]=150>Value</th>
-          <th></th>
+          <th scope="col" [width]=350>Description</th>
+          <th scope="col" [width]=150>Value</th>
+          <th scope="col" ></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let bill of bills">
+        <!-- <tr *ngFor="let bill of bills" [ngClass]="{'table-success': bill.value > 0}"> -->
+          <tr *ngFor="let bill of bills"> 
           <td style="text-align: center;"><a style="color: blue; cursor: pointer;"
               (click)="openModalForEdit(billEdit, bill)">{{bill.billType.description}}</a></td>
           <td style="text-align: center;">{{bill.value | currency:"R$ "}}</td>
@@ -47,8 +50,8 @@
           </td>
         </tr>
       </tbody>
-
     </table>
+
     <div *ngIf="loading" class="spinner-border text-primary ml-2" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
@@ -60,6 +63,9 @@
         ngbTooltip="Add new bill">
         <fa-icon [icon]="faAdd"></fa-icon>
       </button>
+    </div>
+    <div class="me-auto p-3">
+      
     </div>
     <div class="p-3 bd-highlight">
       <label for="items-per-page"></label> Items per page:
