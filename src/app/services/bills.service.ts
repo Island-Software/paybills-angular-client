@@ -18,7 +18,7 @@ export class BillsService {
   getBills(username: string, month: number, year: number, page?: number, itemsPerPage?: number) {    
     let params = new HttpParams();
 
-    if (page !== null && itemsPerPage !== null) {
+    if (page !== undefined && itemsPerPage !== undefined) {
       params = params.append('pageNumber', page!.toString());
       params = params.append('pageSize', itemsPerPage!.toString());
     }

@@ -27,6 +27,7 @@ export class BillListComponent implements OnInit {
   faDelete = faTrashCan;
   faAdd = faSquarePlus;
   faCopy = faCopy;
+  total: number = 0;
 
   constructor(private billsService: BillsService, private modalService: BsModalService,
     private toastrServie: ToastrService) {
@@ -59,6 +60,14 @@ export class BillListComponent implements OnInit {
       this.loadUser();
   }
 
+  updateTotal() {
+    this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear).subscribe(bills => {
+      console.log(bills);
+      
+      this.total = bills.result.reduce((sum, current) => sum + current.value, 0);
+    });
+  }
+
   loadUser() {
     this.loading = true;
     this.username = JSON.parse(localStorage.getItem('user')!).username;
@@ -66,7 +75,8 @@ export class BillListComponent implements OnInit {
       this.bills = bills.result;
       this.pagination = bills.pagination;
       this.loading = false;
-    })
+    });
+    this.updateTotal();
   }
 
   delete(bill: Bill) {
