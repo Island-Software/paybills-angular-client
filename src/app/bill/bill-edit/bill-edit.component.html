@@ -1,26 +1,29 @@
 <div class="modal-header">
-    <h4 class="modal-title pull-left text-primary">Edit bill</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-  
-    <form (ngSubmit)="save()" autocomplete="off" #billForm="ngForm">
-      <div class="form-group">
+  <h4 class="modal-title pull-left text-primary">Edit bill</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <form (ngSubmit)="save()" autocomplete="off" #billForm="ngForm">
+    <div class="form-group">
       <label for="value">Value</label>
+      <input type="number" step="0.01" placeholder="0.00" class="form-control" name="value" id="value" required
+        [(ngModel)]="bill!.value">
+
+      <label style="padding-top: 10px;">Due date (optional)</label>      
       <input 
-        type="number" 
-        step="0.01" 
-        placeholder="0.00" 
         class="form-control" 
-        name="value" 
-        id="value" 
-        required 
-        [(ngModel)]="bill.value">
+        type="datetime"
+        bsDatepicker 
+        [(bsValue)]="bill!.dueDate"
+        (bsValueChange)="onValueChange($event)"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', showTodayButton: true }">
     </div>
-      <button class="btn btn-primary mr-1 mt-3" type="submit" [disabled]="!billForm.valid">Save</button>
-      <button type="button" class="btn btn-secondary mt-3" (click)="close()">Cancel</button>
-    </form>    
-  {{billForm | json}}
-  </div>
+    <button class="btn btn-primary mr-1 mt-3" type="submit" [disabled]="!billForm.valid">Save</button>
+    <button type="button" class="btn btn-secondary mt-3" (click)="close()">Cancel</button>
+  </form>
+  <!-- {{bill | json}} -->
+  <!-- date {{bill.dueDate}} -->
+</div>

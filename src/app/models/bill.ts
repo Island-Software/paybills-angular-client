@@ -5,6 +5,7 @@ export interface Bill {
     value: number;
     month: number;
     year: number;
+    dueDate: Date;
     billType: BillType;
 }
 
@@ -12,6 +13,7 @@ export interface NewBillDto {
     value: number;
     month: number;
     year: number;
+    dueDate: Date;
     typeId: number;
     userId: number;
 }
@@ -21,6 +23,7 @@ export interface UpdateBillDto {
     value: number;
     month: number;
     year: number;
+    dueDate: Date;
     typeId: number;
     userId: number;
 }

@@ -1,11 +1,11 @@
 <div class="modal-header">
-  <h4 class="modal-title pull-left text-primary">New bill</h4>
+  <h4 class="modal-title pull-left text-primary">New</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
 
+<div class="modal-body">
   <form [formGroup]='newBillForm' (ngSubmit)="add()" autocomplete="off">
 
     <label for="bill-type">Type</label>
@@ -18,17 +18,20 @@
       <div class="invalid-feedback">Please select a type</div>
     </div>
 
-    <input 
-        type="number" 
-        step="0.01" 
-        placeholder="0.00" 
-        class="form-control rounded" 
-        name="value" 
-        id="value" 
-        required 
-        [formControl]='newBillForm.controls["value"]' >
+    <input type="number" step="0.01" placeholder="0.00" class="form-control rounded me-auto" name="value" id="value"
+      required [formControl]='newBillForm.controls["value"]'>
+
+    <div style="padding-top: 15px;">
+      <label for="">Due date (optional)</label>
+      <!-- <input type="date" class="form-control" id="exampleInput" name="input" [formControl]='newBillForm.controls["dueDate"]'
+        placeholder="dd-MM-yyyy" /> -->
+      <input class="form-control" bsDatepicker [formControl]='newBillForm.controls["dueDate"]'
+        (bsValueChange)="onValueChange($event)"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }">
+    </div>
 
     <div class="form-group" style="padding-top: 15px;">
+      <label for="">Register date</label>
       <div class="input-group">
         <select [class.is-invalid]='newBillForm.get("month")?.errors && newBillForm.get("month")?.touched'
           class="form-control mr-2 rounded" formControlName="month">
@@ -42,6 +45,7 @@
     </div>
     <button class="btn btn-primary mr-1 mt-3" type="submit" [disabled]="!newBillForm.valid">Add</button>
     <button type="button" class="btn btn-secondary mt-3" (click)="close()">Cancel</button>
+
   </form>
   <!-- <p>Form value: {{newBillForm.value | json}}</p>
     <p>Form status: {{newBillForm.status | json}}</p> -->
