@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MONTHS } from 'src/app/consts/months';
 import { Bill } from 'src/app/models/bill';
-import { BillType } from 'src/app/models/bill-type';
 import { BillsService } from 'src/app/services/bills.service';
 
 @Component({
@@ -14,7 +11,8 @@ export class BillEditComponent implements OnInit {
   @Input() bill?: any;
   @Output() saveBillEvent = new EventEmitter<boolean>();
 
-  constructor(private billsService: BillsService) { }
+  constructor(private billsService: BillsService) {
+   }
 
   ngOnInit(): void {
     
@@ -27,11 +25,19 @@ export class BillEditComponent implements OnInit {
   }
 
   close() {
-    console.log(this.bill.value);
+    // console.log(this.bill.value);
     this.saveBillEvent.emit(false);
   }
 
   closeAndReloadParent() {
     this.saveBillEvent.emit(true);
+  }
+
+  onValueChange(value: Date): void {
+    if (value === undefined)
+      return
+    value.setHours(0);
+    value.setMinutes(0);
+    value.setSeconds(0);    
   }
 }

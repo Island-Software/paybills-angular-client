@@ -1,11 +1,12 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { Bill, NewBillDto } from '../../models/bill';
+import { Bill } from '../../models/bill';
 import { Pagination } from '../../models/pagination';
 import { BillsService } from '../../services/bills.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MONTHS } from 'src/app/consts/months';
 import { ToastrService } from 'ngx-toastr';
 import { faCopy, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-bill-list',
@@ -47,6 +48,9 @@ export class BillListComponent implements OnInit {
 
   openModalForEdit(template: TemplateRef<any>, billToEdit: Bill) {
     this.selectedBill = billToEdit;
+    console.log(typeof(this.selectedBill.dueDate));
+    
+    // this.selectedBill.dueDate = new Date(this.selectedBill.dueDate[0]);
     this.modalRef = this.modalService.show(template);
   }
 
@@ -74,8 +78,9 @@ export class BillListComponent implements OnInit {
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumber, this.pageSize).subscribe(bills => {
       this.bills = bills.result;
       this.pagination = bills.pagination;
-      this.loading = false;
+      this.loading = false;      
     });
+    
     this.updateTotal();
   }
 

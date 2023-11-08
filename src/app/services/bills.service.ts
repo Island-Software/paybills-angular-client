@@ -24,8 +24,12 @@ export class BillsService {
     }
 
     return this.http.get<Bill[]>(this.baseUrl + 'bills/name/' + username + '/' + month + '/' + year, {observe: 'response', params}).pipe(
-      map(response => {
+      map(response => {       
         this.paginatedResult.result = response.body!;
+        this.paginatedResult.result.map(r => {
+          if (r.dueDate != undefined)
+            r.dueDate = new Date(r.dueDate);
+        });
         if (response.headers.get('Pagination') !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')!);
         }
