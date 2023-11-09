@@ -6,6 +6,7 @@ export interface Bill {
     month: number;
     year: number;
     dueDate: Date;
+    paid: boolean;
     billType: BillType;
 }
 
@@ -14,6 +15,7 @@ export interface NewBillDto {
     month: number;
     year: number;
     dueDate: Date;
+    paid: boolean;
     typeId: number;
     userId: number;
 }
@@ -24,6 +26,7 @@ export interface UpdateBillDto {
     month: number;
     year: number;
     dueDate: Date;
+    paid: boolean;
     typeId: number;
     userId: number;
 }
