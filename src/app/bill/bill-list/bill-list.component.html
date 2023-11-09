@@ -29,18 +29,25 @@
       <caption style="text-align: right;">Total: {{total | currency:"R$ "}}</caption>
       <thead class="thead-dark">
         <tr style="text-align: center;">
-          <th scope="col" [width]=350>Description</th>
+          <th scope="col" [width]=50>Paid</th>
+          <th scope="col" [width]=300>Description</th>
           <th scope="col" [width]=150>Value</th>
           <th scope="col" [width]=150>Due date</th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let bill of bills">
-          <td style="text-align: center;"><a style="color: blue; cursor: pointer;"
+        <tr *ngFor="let bill of bills" style="text-align: center;" [ngClass]="{'table-success': bill.paid, 'table-danger': !bill.paid}">
+          
+          <td>
+            <input style="height: 17px; width: 17px;" type="checkbox" name="paid" id="paid" [(ngModel)]="bill.paid"
+              (click)="updatePaymentStatus(bill)">
+          </td>
+          
+          <td><a style="color: blue; cursor: pointer;"
               (click)="openModalForEdit(billEdit, bill)">{{bill.billType.description}}</a></td>
-          <td style="text-align: center;">{{bill.value | currency:"R$ "}}</td>
-          <td style="text-align: center;">{{bill.dueDate | date:'dd/MM/YYYY'}}</td>
+          <td>{{bill.value | currency:"R$ "}}</td>
+          <td>{{bill.dueDate | date:'dd/MM/YYYY'}}</td>
           <td>
             <button class="btn btn-grid btn-danger" (click)="delete(bill)">
               <fa-icon [icon]="faDelete"></fa-icon>

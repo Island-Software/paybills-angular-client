@@ -48,7 +48,7 @@ export class BillListComponent implements OnInit {
 
   openModalForEdit(template: TemplateRef<any>, billToEdit: Bill) {
     this.selectedBill = billToEdit;
-    console.log(typeof(this.selectedBill.dueDate));
+    // console.log(typeof(this.selectedBill.dueDate));
     
     // this.selectedBill.dueDate = new Date(this.selectedBill.dueDate[0]);
     this.modalRef = this.modalService.show(template);
@@ -66,7 +66,7 @@ export class BillListComponent implements OnInit {
 
   updateTotal() {
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear).subscribe(bills => {
-      console.log(bills);
+      // console.log(bills);
       
       this.total = bills.result.reduce((sum, current) => sum + current.value, 0);
     });
@@ -88,6 +88,15 @@ export class BillListComponent implements OnInit {
     if (confirm("Are you sure to delete " + bill.billType.description + "?")) {
       this.billsService.deleteBill(bill).subscribe(_ => this.loadUser());
     }
+  }
+
+  updatePaymentStatus(bill: any) {
+    bill.paid = !bill.paid;
+    this.billsService.updateBill(bill).subscribe(_ =>
+      {
+        console.log("Updated");
+      });    
+
   }
 
   onFilterMonth() {
