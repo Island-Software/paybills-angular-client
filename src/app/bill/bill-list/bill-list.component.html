@@ -1,7 +1,7 @@
 <div class="container shadow p-3">
 
   <div class="d-flex ml-2 mr-2 mb-4">
-    <div class="d-flex justify-content-start">
+    <div class="d-flex justify-content-center">
       <span class="input-group-text">Month</span>
       <select id="month" class="form-control mr-2 rounded" style="width: 100px;" [(ngModel)]="selectedMonth"
         (change)="onFilterMonth()">
@@ -26,16 +26,33 @@
   <div class="row mt-1 ml-2 mr-2">
 
     <table class="table table-hover mb-2 rounded ">
-      <caption style="text-align: right;">Total: {{total | currency:"R$ "}}</caption>
+      <caption style="text-align: center;">Total: {{total | currency:"R$ "}} - Selected: {{selectedTotal | currency: "R$ "}}</caption>
+      
       <thead class="thead-dark">
         <tr style="text-align: center;">
-          <th scope="col" [width]=50>
-            <!-- <input style="height: 15px; width: 15px;" type="checkbox" > -->
-            Select</th>
-          <th scope="col" [width]=300>Description</th>
-          <th scope="col" [width]=150>Value</th>
-          <th scope="col" [width]=150>Due date</th>
-          <th scope="col" ></th>
+          <th scope="col" [width]=50 >
+
+            <div class="btn-group" style="height: 25px;" dropdown>
+              <button type="button" class="btn btn-dark" style="min-width: 10px; padding-left: 25px; padding-top: 0px;">
+                <input style="height: 15px; width: 15px;" type="checkbox" id="checkAll" [(ngModel)]="checkAllState"
+                  (click)="toggleSelect()">
+              </button>
+              <button id="button-split" type="button" dropdownToggle
+                class="btn btn-dark dropdown-toggle dropdown-toggle-split" aria-controls="dropdown-split" style="min-width: 10px; padding-top: 0px;">
+                <span class="caret"></span>
+                <span class="sr-only visually-hidden">Split button!</span>
+              </button>
+              <ul id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-split">
+                <li role="menuitem"><a class="dropdown-item" (click)="selectAllOpen()">Only open</a></li>                                
+                <li role="menuitem"><a class="dropdown-item" (click)="selectAllPaid()">Only paid</a></li>
+              </ul>
+            </div>
+
+          </th>
+          <th scope="col" [width]=300 style="vertical-align: middle;">Description</th>
+          <th scope="col" [width]=150 style="vertical-align: middle;">Value</th>
+          <th scope="col" [width]=150 style="vertical-align: middle;">Due date</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -43,7 +60,8 @@
           [ngClass]="{'table-success': bill.paid, 'table-danger': !bill.paid}">
 
           <td>
-            <input style="height: 17px; width: 17px;" type="checkbox" name="select" id="select" [(ngModel)]="bill.selected">
+            <input style="height: 17px; width: 17px;" type="checkbox" name="select" id="select"
+              [(ngModel)]="bill.selected" (change)="this.updateSelectedTotal()">
           </td>
 
           <td><a style="color: blue; cursor: pointer;"
@@ -73,19 +91,19 @@
       </button>
     </div>
 
-    <div class="p-2 bd-highlight">
+    <!-- <div class="p-2 bd-highlight">
       <button type="button" class="btn btn-dark" (click)="selectAll(true)">Select all</button>
     </div>
     <div class="p-2 bd-highlight">
       <button type="button" class="btn btn-light" (click)="selectAll(false)">Deselect all</button>
-    </div>
+    </div> -->
 
     <div class="ms-auto p-2 bd-highlight">
-      <button type="button" class="btn btn-success" (click)="payBills()" >Pay</button>
+      <button type="button" class="btn btn-success" (click)="payBills()">Pay</button>
     </div>
     <div class="p-2 bd-highlight">
-      <button type="button" class="btn btn-danger" (click)="reopenBills()" >Reopen</button>
-    </div>    
+      <button type="button" class="btn btn-danger" (click)="reopenBills()">Reopen</button>
+    </div>
 
   </div>
 
