@@ -49,7 +49,7 @@ export class BillListComponent implements OnInit {
   openModalForEdit(template: TemplateRef<any>, billToEdit: Bill) {
     this.selectedBill = billToEdit;
     // console.log(typeof(this.selectedBill.dueDate));
-    
+
     // this.selectedBill.dueDate = new Date(this.selectedBill.dueDate[0]);
     this.modalRef = this.modalService.show(template);
   }
@@ -67,7 +67,7 @@ export class BillListComponent implements OnInit {
   updateTotal() {
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear).subscribe(bills => {
       // console.log(bills);
-      
+
       this.total = bills.result.reduce((sum, current) => sum + current.value, 0);
     });
   }
@@ -78,9 +78,9 @@ export class BillListComponent implements OnInit {
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumber, this.pageSize).subscribe(bills => {
       this.bills = bills.result;
       this.pagination = bills.pagination;
-      this.loading = false;      
+      this.loading = false;
     });
-    
+
     this.updateTotal();
   }
 
@@ -90,13 +90,29 @@ export class BillListComponent implements OnInit {
     }
   }
 
-  updatePaymentStatus(bill: any) {
-    bill.paid = !bill.paid;
-    this.billsService.updateBill(bill).subscribe(_ =>
-      {
-        console.log("Updated");
-      });    
+  payBills() {
+    if (confirm("Confirm the payment of all selected bills?")) {
+      this.updatePaymentStatus(true);
+    }
+  }
 
+  reopenBills() {
+    if (confirm("Confirm the reopening of all selected bills?")) {
+      this.updatePaymentStatus(false);
+    }
+  }
+
+  updatePaymentStatus(paid: boolean) {
+    let selectedBills = this.bills.filter(bill => bill.selected);
+    selectedBills.forEach(b => {
+      b.paid = paid;
+      this.billsService.updateBill(b as any).subscribe();
+      b.selected = false;
+    });
+  }
+
+  selectAll(select: boolean) {
+    this.bills.forEach(b => b.selected = select);
   }
 
   onFilterMonth() {
