@@ -28,7 +28,9 @@ export class BillListComponent implements OnInit {
   faDelete = faTrashCan;
   faAdd = faSquarePlus;
   faCopy = faCopy;
+  selectedTotal: number = 0;
   total: number = 0;
+  checkAllState: boolean = false;
 
   constructor(private billsService: BillsService, private modalService: BsModalService,
     private toastrServie: ToastrService) {
@@ -109,6 +111,7 @@ export class BillListComponent implements OnInit {
       this.billsService.updateBill(b as any).subscribe();
       b.selected = false;
     });
+    this.checkAllState = false;
   }
 
   selectAll(select: boolean) {
@@ -136,5 +139,32 @@ export class BillListComponent implements OnInit {
     if (confirm("Are you sure to delete " + name)) {
       console.log("Implement delete functionality here");
     }
+  }
+
+  toggleSelect()
+  {
+    this.selectAll(!this.checkAllState);
+    this.updateSelectedTotal()
+  }
+
+  selectAllPaid()
+  {
+    this.checkAllState = false;
+    this.selectAll(false);
+    this.bills.filter(b => b.paid).forEach(b => b.selected = true);
+    this.updateSelectedTotal()
+  } 
+  
+  selectAllOpen()
+  {
+    this.checkAllState = false;
+    this.selectAll(false);
+    this.bills.filter(b => !b.paid).forEach(b => b.selected = true);
+    this.updateSelectedTotal()
+  }
+
+  updateSelectedTotal() {
+    this.selectedTotal = 0;
+    this.bills.filter(b => b.selected).map(b => this.selectedTotal += b.value);
   }
 }

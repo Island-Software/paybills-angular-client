@@ -19,3 +19,7 @@
 .container, .col {
     border-radius: 10px;
 }
+
+.dropdown-item {
+    cursor: pointer;
+}
