@@ -29,6 +29,7 @@ export class BillsService {
         this.paginatedResult.result.map(r => {
           if (r.dueDate != undefined)
             r.dueDate = new Date(r.dueDate);
+          r.selected = false;
         });
         if (response.headers.get('Pagination') !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')!);

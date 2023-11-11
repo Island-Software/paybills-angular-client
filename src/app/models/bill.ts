@@ -7,6 +7,7 @@ export interface Bill {
     year: number;
     dueDate: Date;
     paid: boolean;
+    selected?: boolean;
     billType: BillType;
 }
 

@@ -29,26 +29,28 @@
       <caption style="text-align: right;">Total: {{total | currency:"R$ "}}</caption>
       <thead class="thead-dark">
         <tr style="text-align: center;">
-          <th scope="col" [width]=50>Paid</th>
+          <th scope="col" [width]=50>
+            <!-- <input style="height: 15px; width: 15px;" type="checkbox" > -->
+            Select</th>
           <th scope="col" [width]=300>Description</th>
           <th scope="col" [width]=150>Value</th>
           <th scope="col" [width]=150>Due date</th>
-          <th scope="col"></th>
+          <th scope="col" ></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let bill of bills" style="text-align: center;" [ngClass]="{'table-success': bill.paid, 'table-danger': !bill.paid}">
-          
+        <tr *ngFor="let bill of bills" style="text-align: center;"
+          [ngClass]="{'table-success': bill.paid, 'table-danger': !bill.paid}">
+
           <td>
-            <input style="height: 17px; width: 17px;" type="checkbox" name="paid" id="paid" [(ngModel)]="bill.paid"
-              (click)="updatePaymentStatus(bill)">
+            <input style="height: 17px; width: 17px;" type="checkbox" name="select" id="select" [(ngModel)]="bill.selected">
           </td>
-          
+
           <td><a style="color: blue; cursor: pointer;"
               (click)="openModalForEdit(billEdit, bill)">{{bill.billType.description}}</a></td>
           <td>{{bill.value | currency:"R$ "}}</td>
           <td>{{bill.dueDate | date:'dd/MM/YYYY'}}</td>
-          <td>
+          <td style="text-align: start">
             <button class="btn btn-grid btn-danger" (click)="delete(bill)">
               <fa-icon [icon]="faDelete"></fa-icon>
             </button>
@@ -63,18 +65,35 @@
   </div>
 
   <div class="d-flex bd-highlight mb-3">
-    <div class="me-auto p-2 bd-highlight">
+
+    <div class="p-2 bd-highlight">
       <button type="button" class="btn btn-add btn-success" (click)="openModal(billAdd)" [openDelay]="500"
         ngbTooltip="Add new bill">
         <fa-icon [icon]="faAdd"></fa-icon>
       </button>
     </div>
-    <div class="me-auto p-3">
 
+    <div class="p-2 bd-highlight">
+      <button type="button" class="btn btn-dark" (click)="selectAll(true)">Select all</button>
     </div>
-    <div class="p-3 bd-highlight">
+    <div class="p-2 bd-highlight">
+      <button type="button" class="btn btn-light" (click)="selectAll(false)">Deselect all</button>
+    </div>
+
+    <div class="ms-auto p-2 bd-highlight">
+      <button type="button" class="btn btn-success" (click)="payBills()" >Pay</button>
+    </div>
+    <div class="p-2 bd-highlight">
+      <button type="button" class="btn btn-danger" (click)="reopenBills()" >Reopen</button>
+    </div>    
+
+  </div>
+
+  <div class="d-flex bd-highlight mb-3">
+    <div class="ms-auto p-3 bd-highlight">
       <label for="items-per-page"></label> Items per page:
     </div>
+
     <div class="p-2 bd-highlight">
       <select id="items-per-page" [(ngModel)]="pageSize" (ngModelChange)="loadUser()" class="form-select rounded"
         aria-label="Select items per page">
@@ -92,6 +111,9 @@
     </pagination>
   </div>
 </div>
+<!-- <pre>
+  {{bills | json}}
+</pre> -->
 
 <ng-template #billAdd>
   <app-bill-register (saveBillEvent)="closeModal($event)"></app-bill-register>
