@@ -8,7 +8,7 @@ import { AccountService } from './services/account.service';
   styleUrls: ['./app.component.css'] 
 })
 export class AppComponent implements OnInit {
-  title = 'PayBills client app';
+  title = 'Billminder';
   users: any;
 
   constructor(private accountService: AccountService) {}
