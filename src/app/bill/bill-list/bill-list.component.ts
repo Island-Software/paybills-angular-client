@@ -96,12 +96,14 @@ export class BillListComponent implements OnInit {
     if (confirm("Confirm the payment of all selected bills?")) {
       this.updatePaymentStatus(true);
     }
+    this.updateSelectedTotal();
   }
 
   reopenBills() {
     if (confirm("Confirm the reopening of all selected bills?")) {
       this.updatePaymentStatus(false);
     }
+    this.updateSelectedTotal();
   }
 
   updatePaymentStatus(paid: boolean) {
