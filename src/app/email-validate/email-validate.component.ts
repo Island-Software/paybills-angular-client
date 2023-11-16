@@ -9,6 +9,7 @@ import { AccountService } from '../services/account.service';
 })
 export class EmailValidateComponent implements OnInit {
   validated: boolean = false;
+  error: boolean = false;
 
   constructor(public accountService: AccountService, private route: ActivatedRoute) {}
   
@@ -16,9 +17,13 @@ export class EmailValidateComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         var email = params.email;
-        var emailToken = params.emailtoken;
-        this.accountService.validateEmail(email, emailToken);
+        var emailToken = params.emailToken;
+        
+        this.accountService.validateEmail(email, emailToken)
+          .subscribe({
+            complete: () => this.validated = true,
+            error: () => this.error = true
+          });
       });    
   }
-
 }

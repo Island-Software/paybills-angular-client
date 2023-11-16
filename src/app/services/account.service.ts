@@ -50,11 +50,6 @@ export class AccountService {
   }
 
   validateEmail(email: string, emailToken: string) {
-    return this.http.get(this.baseUrl + 'email/validate?email=' + email + '&emailToken=' + emailToken).subscribe(
-      response => {
-        console.log(response);
-      },       
-      error => { console.log(error) }
-    );
+    return this.http.get(this.baseUrl + 'email/validate?email=' + email + '&emailToken=' + emailToken);
   }
 }

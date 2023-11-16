@@ -25,7 +25,6 @@ export class BillEditComponent implements OnInit {
   }
 
   close() {
-    // console.log(this.bill.value);
     this.saveBillEvent.emit(false);
   }
 

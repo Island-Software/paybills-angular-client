@@ -9,14 +9,11 @@ import { AccountService } from 'src/app/services/account.service';
 })
 export class HomeComponent implements OnInit {
   registerMode = false;
-  // users: any;
 
-  // constructor(private http: HttpClient) { }
   constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
-    this.accountService.currentUser$.subscribe(user => console.log(user));
-    // this.getUsers();
+    this.accountService.currentUser$.subscribe();
   }
 
   registerToggle() {

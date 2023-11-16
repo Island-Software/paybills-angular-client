@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/user';
+import { User, UserEdit } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +16,18 @@ export class UsersService {
   }
 
   getUser(username: string) {
-    return this.http.get<User>(this.baseUrl + 'users/name/' + username);
+    return this.http.get<UserEdit>(this.baseUrl + 'users/name/' + username);
   }
 
   getCurrentUserId() {
     return JSON.parse(localStorage.getItem('user')!).userId;
+  }
+
+  getCurrentUserName() {
+    return JSON.parse(localStorage.getItem('user')!).username;
+  }
+
+  update(id: number, user: any) {
+    return this.http.put(this.baseUrl + 'users/' + id, user);
   }
 }

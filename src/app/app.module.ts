@@ -30,6 +30,7 @@ import { PasswordInputComponent } from './forms/password-input/password-input.co
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DatePipe } from '@angular/common';
 import { EmailValidateComponent } from './email-validate/email-validate.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { EmailValidateComponent } from './email-validate/email-validate.componen
     TestErrorsComponent,
     TextInputComponent,
     EmailValidateComponent,
+    UserEditComponent,
   ],
   providers: [
     DatePipe,
