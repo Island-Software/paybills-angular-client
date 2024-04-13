@@ -33,5 +33,5 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: paybills-client
-        path: /var/www/paybills/wwwroot
+        path: /var/www/paybills/Presentation/wwwroot
       
