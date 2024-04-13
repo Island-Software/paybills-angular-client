@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../services/account.service';
 
@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   // Property to send data to parent component
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
-  newUserForm!: UntypedFormGroup;
+  newUserForm: FormGroup = new FormGroup({});
 
   constructor(private accountService: AccountService, 
     private toastrService: ToastrService) { }
@@ -24,19 +24,26 @@ export class RegisterComponent implements OnInit {
   }
 
   initializeForm() {
-    this.newUserForm = new UntypedFormGroup({
-      username: new UntypedFormControl('', Validators.required),
-      password: new UntypedFormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)])
+    this.newUserForm = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16), this.matchValues('password')])
     })
+    this.newUserForm.controls['password'].valueChanges.subscribe({
+      next: () => this.newUserForm.controls['confirmPassword'].updateValueAndValidity()
+    })
+  }
+
+  matchValues(matchTo: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching: true}
+    }
   }
 
   onUserText() {
     this.model.password = this.model.username;
   }
 
-  // onKey(event: any) { // without type info
-  //   this.model.password = this.model.username;
-  // }
 
   register() {
     this.accountService.register(this.newUserForm.value).subscribe(response => {      

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { text } from '@fortawesome/fontawesome-svg-core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -21,7 +22,7 @@ export class AccountService {
       map((response: LoginUser) => {
         const user = response;
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));          
+          localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         }
       })
@@ -30,7 +31,7 @@ export class AccountService {
 
   register(model: any) {
     return this.http.post<LoginUser>(this.baseUrl + 'account/register', model).pipe(
-      map((user : LoginUser) => {
+      map((user: LoginUser) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
@@ -46,5 +47,9 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(undefined);
+  }
+
+  validateEmail(email: string, emailToken: string) {
+    return this.http.get(this.baseUrl + 'email/validate?email=' + email + '&emailToken=' + emailToken);
   }
 }

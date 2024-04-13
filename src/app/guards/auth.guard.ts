@@ -12,9 +12,13 @@ export class AuthGuard  {
 
   constructor(private accountService: AccountService, private toastr: ToastrService) {}
 
-  canActivate(): Observable<boolean> {    
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {    
+      
     return this.accountService.currentUser$.pipe(
       map(user => {
+        if (state.url.startsWith('/validated'))
+          return true;
+
         if (user) 
           return true;
         

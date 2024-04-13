@@ -29,6 +29,8 @@ import { BillEditComponent } from './bill/bill-edit/bill-edit.component';
 import { PasswordInputComponent } from './forms/password-input/password-input.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DatePipe } from '@angular/common';
+import { EmailValidateComponent } from './email-validate/email-validate.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   imports: [
@@ -60,6 +62,8 @@ import { DatePipe } from '@angular/common';
     ServerErrorComponent,
     TestErrorsComponent,
     TextInputComponent,
+    EmailValidateComponent,
+    UserEditComponent,
   ],
   providers: [
     DatePipe,

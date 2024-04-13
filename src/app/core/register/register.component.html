@@ -2,8 +2,9 @@
     <h2 class="text-center text-primary">Sign up!</h2>
     <hr>
     <div class="form-group">
-        <app-text-input [formControl]='newUserForm.controls["username"]' [label]='"User name"'></app-text-input>
-        <app-password-input [formControl]='newUserForm.controls["password"]' [label]='"Password"'></app-password-input>
+        <app-text-input formControlName="username" [label]='"User name"'></app-text-input>
+        <app-password-input formControlName="password" [label]='"Password"'></app-password-input>
+        <app-password-input formControlName="confirmPassword" [label]='"Confirm password"'></app-password-input>
     </div>
 
     <div class="row justify-content-center" style="text-align: center;">

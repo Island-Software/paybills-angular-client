@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
 
 @Component({

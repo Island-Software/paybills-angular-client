@@ -1,0 +1,14 @@
+<div *ngIf="validated" class="container" style="margin-top: 100px; text-align: center;">
+    <div class="container-fluid mt-5" >    
+            <h4>Thanks! Your email has been succesfully validated!</h4>
+            <ng-container *ngIf="(accountService.currentUser$ | async) == null">
+                <p class="lead">Login above to continue using the application</p>
+            </ng-container>    
+    </div>
+</div>
+<div *ngIf="error" class="container" style="margin-top: 100px; text-align: center;">
+    <div class="container-fluid mt-5" >    
+            <h4>There was an error when validating your email</h4>
+            <p class="lead">Please contact our support for more details</p>
+    </div>
+</div>

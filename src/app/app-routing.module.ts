@@ -8,6 +8,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './core/home/home.component';
+import { EmailValidateComponent as EmailValidateComponent } from './email-validate/email-validate.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent},
@@ -20,7 +22,9 @@ const routes: Routes = [
     children: [
       {path: 'bill-type/:id', component: BillTypeDetailComponent},
       {path: 'bill-type-list', component: BillTypeListComponent},
-      {path: 'bills', component: BillListComponent}
+      {path: 'bills', component: BillListComponent},
+      {path: 'validate', component: EmailValidateComponent},
+      {path: 'user-edit', component: UserEditComponent}
     ]
   },
   {path: 'home', component: HomeComponent},
