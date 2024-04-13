@@ -8,3 +8,10 @@ td, th {
 .btn-add, .btn-copy {
   min-width: 50px;
 }
+
+@media (max-width: 576px) {
+  .smaller-font {
+    font-size: 12px; /* Adjust the font size as per your requirement */
+  }
+
+}
