@@ -11,7 +11,7 @@ td, th {
 
 @media (max-width: 576px) {
   .smaller-font {
-    font-size: 12px; /* Adjust the font size as per your requirement */
+    font-size: 14px; /* Adjust the font size as per your requirement */
   }
 
 }
