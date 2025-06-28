@@ -31,6 +31,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DatePipe } from '@angular/common';
 import { EmailValidateComponent } from './email-validate/email-validate.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { ReceivingTypeRegisterComponent } from './receiving-type/receiving-type-register/receiving-type-register.component';
+import { ReceivingTypeListComponent } from './receiving-type/receiving-type-list/receiving-type-list.component';
 
 @NgModule({
   imports: [
@@ -64,6 +66,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     TextInputComponent,
     EmailValidateComponent,
     UserEditComponent,
+    ReceivingTypeRegisterComponent,
+    ReceivingTypeListComponent
   ],
   providers: [
     DatePipe,
