@@ -31,3 +31,4 @@ jobs:
         key: ${{ secrets.AZURE_VM_SSH_KEY }}
         source: "dist/paybills-client/*"
         target: "/var/www/html/billminder-app"
+        strip_components: 2
