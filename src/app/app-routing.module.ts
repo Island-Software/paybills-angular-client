@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './core/home/home.component';
 import { EmailValidateComponent as EmailValidateComponent } from './email-validate/email-validate.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { ReceivingTypeListComponent } from './receiving-type/receiving-type-list/receiving-type-list.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
     children: [
       {path: 'bill-type/:id', component: BillTypeDetailComponent},
       {path: 'bill-type-list', component: BillTypeListComponent},
+      {path: 'receiving-type-list', component: ReceivingTypeListComponent},
       {path: 'bills', component: BillListComponent},
       {path: 'validate', component: EmailValidateComponent},
       {path: 'user-edit', component: UserEditComponent}

@@ -9,6 +9,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 export class PasswordInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() type = 'password';
+  @Input() additionalClasses = 'mb-2';
 
   constructor(@Self() public ngControl: NgControl) { 
     this.ngControl.valueAccessor = this;

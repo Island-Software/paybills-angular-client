@@ -23,3 +23,32 @@
 .dropdown-item {
     cursor: pointer;
 }
+
+.bg-success {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.btn-success {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-link.active {
+    /* color: white !important; */
+    font-weight: bold;
+    font-size: large;
+}
+
+.nav-link:hover {
+    color: black !important;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: x-large;
+}

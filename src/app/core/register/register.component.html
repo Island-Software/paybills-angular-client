@@ -1,5 +1,5 @@
 <form [formGroup]='newUserForm' (ngSubmit)="register()" autocomplete="off">
-    <h2 class="text-center text-primary">Sign up!</h2>
+    <h2 class="text-center fw-bold">Sign up</h2>
     <hr>
     <div class="form-group">
         <app-text-input formControlName="username" [label]='"User name"'></app-text-input>
@@ -8,8 +8,8 @@
     </div>
 
     <div class="row justify-content-center" style="text-align: center;">
-        <div class="form-group">
-            <button class="btn btn-primary mr-2" type="submit" [disabled]="!newUserForm.valid">Register</button>
+        <div class="form-group mt-2">
+            <button class="btn btn-success mr-2 me-1" type="submit" [disabled]="!newUserForm.valid">Register</button>
             <button class="btn btn-secondary mr-2" type="button" (click)="cancel()">Cancel</button>
         </div>
     </div>
