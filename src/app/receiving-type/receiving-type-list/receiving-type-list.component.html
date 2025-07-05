@@ -10,12 +10,12 @@
       <div class="list-group mt-2">
         <div *ngFor="let receivingType of receivingTypes">
           <div class="d-flex flex-row-reverse bd-highlight mt-1">
-            <button type="button" class="btn btn-grid btn-danger ml-1" (click)="deleteBillType(billType)">
+            <button type="button" class="btn btn-grid btn-danger ms-1" (click)="deleteReceivingType(receivingType)">
               <fa-icon [icon]="faDelete"></fa-icon>
             </button>
 
             <button type="button" class="list-group-item list-group-item-action rounded"
-              (click)="onSelect(billType)">{{billType.description}}</button>
+              (click)="onSelect(receivingType)">{{receivingType.description}}</button>
           </div>
         </div>
         <div *ngIf="loading" class="spinner-border text-primary ml-2" role="status">
@@ -23,18 +23,18 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn-success mt-3" (click)="openModal(billTypeAdd)">Add bill type</button>
+      <button type="button" class="btn btn-success mt-3" (click)="openModal(receivingTypeAdd)">Add receiving type</button>
 
     </div>
     <div class="col">
       <div *ngIf="selectedReceivingType" class="row shadow p-3 mb-2 bg-body rounded">
-        <app-bill-type-detail [billType]="selectedBillType"
-          (saveBillTypeEvent)="closeChild($event)"></app-bill-type-detail>
+        <app-receiving-type-detail [receivingType]="selectedReceivingType"
+          (saveReceivingTypeEvent)="closeChild($event)"></app-receiving-type-detail>
       </div>
     </div>
   </div>
 </div>
 
-<ng-template #billTypeAdd>
-  <app-bill-type-register (addBillTypeEvent)="closeModal($event)"></app-bill-type-register>
+<ng-template #receivingTypeAdd>
+  <app-receiving-type-register (addReceivingTypeEvent)="closeModal($event)"></app-receiving-type-register>
 </ng-template>

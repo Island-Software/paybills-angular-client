@@ -1,9 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ReceivingType } from 'src/app/models/receiving-type';
 import { ReceivingTypesService } from 'src/app/services/receiving-types.service';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-receiving-type-list',
@@ -43,9 +43,9 @@ export class ReceivingTypeListComponent implements OnInit {
     }
   }
 
-  deleteBillType(receivingType: ReceivingType) {
+  deleteReceivingType(receivingType: ReceivingType) {
     this.receivingTypeService.deleteReceivingType(receivingType).subscribe(_ => {
-      this.toastrService.success("Bill type delete successfully");
+      this.toastrService.success("Receiving type delete successfully");
       this.loadReceivingTypes();
     });
   }
@@ -60,6 +60,8 @@ export class ReceivingTypeListComponent implements OnInit {
     this.loading = true;
     this.receivingTypeService.getReceivingTypes()
       .subscribe(rts => {
+        console.log(rts);
+        
         this.receivingTypes = rts;
         this.originalReceivingTypes = rts;
         this.loading = false;

@@ -33,6 +33,7 @@ import { EmailValidateComponent } from './email-validate/email-validate.componen
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { ReceivingTypeRegisterComponent } from './receiving-type/receiving-type-register/receiving-type-register.component';
 import { ReceivingTypeListComponent } from './receiving-type/receiving-type-list/receiving-type-list.component';
+import { ReceivingTypeDetailComponent } from './receiving-type/receiving-type-detail/receiving-type-detail.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { ReceivingTypeListComponent } from './receiving-type/receiving-type-list
     EmailValidateComponent,
     UserEditComponent,
     ReceivingTypeRegisterComponent,
-    ReceivingTypeListComponent
+    ReceivingTypeListComponent,
+    ReceivingTypeDetailComponent
   ],
   providers: [
     DatePipe,

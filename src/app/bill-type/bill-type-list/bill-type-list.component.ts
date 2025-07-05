@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BillType } from '../../models/bill-type';
-import { BillTypesService } from '../../services/bill-types.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { BillType } from '../../models/bill-type';
+import { BillTypesService } from '../../services/bill-types.service';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
