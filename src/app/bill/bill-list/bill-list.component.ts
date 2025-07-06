@@ -7,6 +7,8 @@ import { MONTHS } from 'src/app/consts/months';
 import { ToastrService } from 'ngx-toastr';
 import { faCopy, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '@angular/common';
+import { Receiving } from 'src/app/models/receiving';
+import { ReceivingService } from 'src/app/services/receiving.service';
 
 @Component({
   selector: 'app-bill-list',
@@ -15,7 +17,9 @@ import { formatDate } from '@angular/common';
 })
 export class BillListComponent implements OnInit {
   bills: Bill[] = [];
+  receivings: Receiving[] = [];
   selectedBill?: Bill;
+  selectedReceiving?: Receiving;
   pagination: Pagination | undefined;
   pageNumber = 1;
   pageSize = 10;
@@ -28,11 +32,14 @@ export class BillListComponent implements OnInit {
   faDelete = faTrashCan;
   faAdd = faSquarePlus;
   faCopy = faCopy;
-  selectedTotal: number = 0;
-  total: number = 0;
-  checkAllState: boolean = false;
+  selectedBillsTotal: number = 0;
+  selectedReceivingsTotal: number = 0;
+  billsTotal: number = 0;
+  receivingsTotal: number = 0;
+  checkAllBillsState: boolean = false;
+  checkAllReceivingsState: boolean = false;
 
-  constructor(private billsService: BillsService, private modalService: BsModalService,
+  constructor(private billsService: BillsService, private receivingService: ReceivingService, private modalService: BsModalService,
     private toastrServie: ToastrService) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
@@ -65,7 +72,10 @@ export class BillListComponent implements OnInit {
 
   updateTotal() {
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear).subscribe(bills => {
-      this.total = bills.result.reduce((sum, current) => sum + current.value, 0);
+      this.billsTotal = bills.result.reduce((sum, current) => sum + current.value, 0);
+    });
+    this.receivingService.get(this.username, this.selectedMonth, this.selectedYear).subscribe(receivings => {
+      this.receivingsTotal = receivings.result.reduce((sum, current) => sum + current.value, 0);
     });
   }
 
@@ -76,6 +86,12 @@ export class BillListComponent implements OnInit {
       this.bills = bills.result;
       this.pagination = bills.pagination;
       this.loading = false;
+    });
+
+    this.receivingService.get(this.username, this.selectedMonth, this.selectedYear, this.pageNumber, this.pageSize).subscribe(receivings => {
+      this.receivings = receivings.result;
+      console.log('loaded receivings', this.receivings);
+      
     });
 
     this.updateTotal();
@@ -91,14 +107,38 @@ export class BillListComponent implements OnInit {
     if (confirm("Confirm the payment of all selected bills?")) {
       this.updatePaymentStatus(true);
     }
-    this.updateSelectedTotal();
+    this.updateSelectedBillsTotal();
+  }
+
+  receive() {
+    if (confirm("Confirm the receiving of all selected receivings?")) {
+      this.updateReceivingStatus(true);
+    }
+    this.updateSelectedReceivingsTotal();
+  }
+
+  updateReceivingStatus(received: boolean) {
+    let selectedReceivings = this.receivings.filter(receiving => receiving.selected);
+    selectedReceivings.forEach(r => {
+      r.received = received;
+      this.receivingService.update(r as any).subscribe();
+      r.selected = false;
+    });
+    this.checkAllReceivingsState = false;
   }
 
   reopenBills() {
     if (confirm("Confirm the reopening of all selected bills?")) {
       this.updatePaymentStatus(false);
     }
-    this.updateSelectedTotal();
+    this.updateSelectedBillsTotal();
+  }
+
+  reopenReceivings() {
+    if (confirm("Confirm the reopening of all selected receivings?")) {
+      this.updateReceivingStatus(false);
+    }
+    this.updateSelectedReceivingsTotal();
   }
 
   updatePaymentStatus(paid: boolean) {
@@ -108,11 +148,15 @@ export class BillListComponent implements OnInit {
       this.billsService.updateBill(b as any).subscribe();
       b.selected = false;
     });
-    this.checkAllState = false;
+    this.checkAllBillsState = false;
   }
 
-  selectAll(select: boolean) {
+  selectAllBills(select: boolean) {
     this.bills.forEach(b => b.selected = select);
+  }
+
+  selectAllReceivings(select: boolean) {
+    this.receivings.forEach(b => b.selected = select);
   }
 
   onFilterMonth() {
@@ -132,27 +176,51 @@ export class BillListComponent implements OnInit {
     }
   }
 
-  toggleSelect() {
-    this.selectAll(!this.checkAllState);
-    this.updateSelectedTotal()
+  toggleSelectBills() {
+    this.selectAllBills(!this.checkAllBillsState);
+    this.updateSelectedBillsTotal()
+  }
+
+  toggleSelectReceivings() {
+    this.selectAllReceivings(!this.checkAllReceivingsState);
+    this.updateSelectedReceivingsTotal()
   }
 
   selectAllPaid() {
-    this.checkAllState = false;
-    this.selectAll(false);
+    this.checkAllBillsState = false;
+    this.selectAllBills(false);
     this.bills.filter(b => b.paid).forEach(b => b.selected = true);
-    this.updateSelectedTotal()
+    this.updateSelectedBillsTotal()
   }
 
-  selectAllOpen() {
-    this.checkAllState = false;
-    this.selectAll(false);
+  selectAllOpenBills() {
+    this.checkAllBillsState = false;
+    this.selectAllBills(false);
     this.bills.filter(b => !b.paid).forEach(b => b.selected = true);
-    this.updateSelectedTotal()
+    this.updateSelectedBillsTotal()
   }
 
-  updateSelectedTotal() {
-    this.selectedTotal = 0;
-    this.bills.filter(b => b.selected).map(b => this.selectedTotal += b.value);
+  selectAllReceived() {
+    this.checkAllReceivingsState = false;
+    this.selectAllReceivings(false);
+    this.receivings.filter(r => r.received).forEach(r => r.selected = true);
+    this.updateSelectedBillsTotal();
+  }
+
+  selectAllOpenReceivings() {
+    this.checkAllReceivingsState = false;
+    this.selectAllReceivings(false);
+    this.receivings.filter(r => !r.received).forEach(r => r.selected = true);
+    this.updateSelectedBillsTotal();
+  }
+
+  updateSelectedBillsTotal() {
+    this.selectedBillsTotal = 0;
+    this.bills.filter(b => b.selected).map(b => this.selectedBillsTotal += b.value);
+  }
+
+  updateSelectedReceivingsTotal() {
+    this.selectedReceivingsTotal = 0;
+    this.receivings.filter(b => b.selected).map(b => this.selectedReceivingsTotal += b.value);
   }
 }

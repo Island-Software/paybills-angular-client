@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { BillType } from '../../models/bill-type';
 import { BillTypesService } from '../../services/bill-types.service';
-import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-bill-type-detail',

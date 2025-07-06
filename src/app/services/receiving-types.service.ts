@@ -22,7 +22,7 @@ export class ReceivingTypesService {
   }
 
   createReceivingType(ReceivingType: ReceivingType) {
-    return this.http.post(this.baseUrl + 'receivingtype/create', ReceivingType);
+    return this.http.post(this.baseUrl + 'receivingtype/', ReceivingType);
   }
 
   deleteReceivingType(ReceivingType: ReceivingType) {
