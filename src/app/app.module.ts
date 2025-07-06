@@ -34,6 +34,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { ReceivingTypeRegisterComponent } from './receiving-type/receiving-type-register/receiving-type-register.component';
 import { ReceivingTypeListComponent } from './receiving-type/receiving-type-list/receiving-type-list.component';
 import { ReceivingTypeDetailComponent } from './receiving-type/receiving-type-detail/receiving-type-detail.component';
+import { ReceivingRegisterComponent } from './receiving/receiving-register/receiving-register.component';
+import { ReceivingEditComponent } from './receiving/receiving-edit/receiving-edit.component';
 
 @NgModule({
   imports: [
@@ -69,7 +71,9 @@ import { ReceivingTypeDetailComponent } from './receiving-type/receiving-type-de
     UserEditComponent,
     ReceivingTypeRegisterComponent,
     ReceivingTypeListComponent,
-    ReceivingTypeDetailComponent
+    ReceivingTypeDetailComponent,
+    ReceivingRegisterComponent,
+    ReceivingEditComponent
   ],
   providers: [
     DatePipe,

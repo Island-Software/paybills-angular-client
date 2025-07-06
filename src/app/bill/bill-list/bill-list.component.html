@@ -1,4 +1,4 @@
-<div class="container shadow p-3">
+<div class="container shadow p-4">
 
   <div class="d-flex ml-lg-2 mr-lg-2 mb-4">
     <div class="d-flex justify-content-center">
@@ -20,32 +20,33 @@
         <fa-icon [icon]="faCopy"></fa-icon>
       </button>
     </div>
-
   </div>
 
-  <div class="row mt-1 ml-lg-2 mr-lg-2 smaller-font">
+  <!-- ###### Bills ###### -->
 
+  <div class="row mt-1 ml-lg-2 mr-lg-2 smaller-font">
+    <p class="fs-5 fw-bold text-warning">Bills</p>
     <table class="table table-hover mb-2 rounded">
-      <caption style="text-align: center;">Total: {{total | currency:"R$ "}} - Selected: {{selectedTotal | currency: "R$ "}}</caption>
+      <caption style="text-align: center;">Total: {{billsTotal | currency:"R$ "}} - Selected: {{selectedBillsTotal | currency: "R$ "}}</caption>
       
       <thead class="thead-dark">
         <tr style="text-align: center;">
           <th scope="col" [width]="5">
 
             <div class="btn-group" dropdown>
-              <button type="button" class="btn btn-dark" style="min-width: 5px;">
-                <input type="checkbox" id="checkAll" [(ngModel)]="checkAllState"
-                  (click)="toggleSelect()">
+              <button type="button" class="btn btn-light" style="min-width: 5px;">
+                <input type="checkbox" id="checkAllBills" [(ngModel)]="checkAllBillsState"
+                  (click)="toggleSelectBills()">
               </button>
               <button id="button-split" type="button" dropdownToggle
-                class="btn btn-dark dropdown-toggle dropdown-toggle-split" 
+                class="btn btn-light dropdown-toggle dropdown-toggle-split" 
                 aria-controls="dropdown-split" 
                 style="min-width: 0px; padding-top: 0px;">
                 <span class="caret"></span>
                 <span class="sr-only visually-hidden">Split button!</span>
               </button>
               <ul id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-split">
-                <li role="menuitem"><a class="dropdown-item" (click)="selectAllOpen()">Only open</a></li>                                
+                <li role="menuitem"><a class="dropdown-item" (click)="selectAllOpenBills()">Only open</a></li>                                
                 <li role="menuitem"><a class="dropdown-item" (click)="selectAllPaid()">Only paid</a></li>
               </ul>
             </div>
@@ -63,7 +64,7 @@
 
           <td>
             <input style="height: 15px; width: 15px; padding-right: 0px;" type="checkbox" name="select" 
-              [(ngModel)]="bill.selected" (change)="this.updateSelectedTotal()">
+              [(ngModel)]="bill.selected" (change)="this.updateSelectedBillsTotal()">
           </td>
 
           <td><a style="color: blue; cursor: pointer;"
@@ -85,16 +86,15 @@
   </div>
 
   <div class="d-flex bd-highlight mb-3">
-
     <div class="bd-highlight">
-      <button type="button" class="btn btn-add btn-success" (click)="openModal(billAdd)" [openDelay]="500"
-        ngbTooltip="Add new bill">
-        <fa-icon [icon]="faAdd"></fa-icon>
+      <button type="button" class="btn btn-add btn-warning fw-bold" (click)="openModal(billAdd)" [openDelay]="500"
+        ngbTooltip="Add new bill">Add bill
+        <fa-icon class="ms-2" [icon]="faAdd"></fa-icon>
       </button>
     </div>
 
     <div class="ms-auto bd-highlight mr-1">
-      <button type="button" class="btn btn-success me-1" (click)="payBills()">Pay</button>
+      <button type="button" class="btn btn-success me-1 fw-bold" (click)="payBills()">Pay</button>
     </div>
     <div class="bd-highlight">
       <button type="button" class="btn btn-danger" (click)="reopenBills()">Reopen</button>
@@ -102,8 +102,15 @@
 
   </div>
 
-  <div class="d-flex bd-highlight mb-3">
-    <div class="ms-auto p-3 bd-highlight">
+  <div class="d-flex bd-highlight">
+    <div class="ms-auto" *ngIf="pagination">
+      <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+      </pagination>
+    </div>
+
+    <div class="ms-auto pt-3 bd-highlight">
       <label for="items-per-page"></label> Items per page:
     </div>
 
@@ -114,19 +121,114 @@
         <option value="10">10</option>
         <option value="20">20</option>
       </select>
+    </div> 
+  </div>
+
+  <!-- ###### Receivings ###### -->
+
+  <div class="row mt-1 ml-lg-2 mr-lg-2 smaller-font">
+    <p class="fs-5 fw-bold text-success">Receivings</p>
+    <table class="table table-hover mb-2 rounded">
+      <caption style="text-align: center;">Total: {{receivingsTotal | currency:"R$ "}} - Selected: {{selectedReceivingsTotal | currency: "R$ "}}</caption>
+      
+      <thead class="thead-dark">
+        <tr style="text-align: center;">
+          <th scope="col" [width]="5">
+
+            <div class="btn-group" dropdown>
+              <button type="button" class="btn btn-light" style="min-width: 5px;">
+                <input type="checkbox" id="checkAllReceivings" [(ngModel)]="checkAllReceivingsState"
+                  (click)="toggleSelectReceivings()">
+              </button>
+              <button id="button-split" type="button" dropdownToggle
+                class="btn btn-light dropdown-toggle dropdown-toggle-split" 
+                aria-controls="dropdown-split" 
+                style="min-width: 0px; padding-top: 0px;">
+                <span class="caret"></span>
+                <span class="sr-only visually-hidden">Split button!</span>
+              </button>
+              <ul id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-split">
+                <li role="menuitem"><a class="dropdown-item" (click)="selectAllOpenReceivings()">Only open</a></li>                                
+                <li role="menuitem"><a class="dropdown-item" (click)="selectAllReceived()">Only received</a></li>
+              </ul>
+            </div>
+
+          </th>
+          <th scope="col" [width]=300 style="vertical-align: middle;"><p class="smaller-font">Description</p></th>
+          <th scope="col" [width]=150 style="vertical-align: middle;"><p class="smaller-font">Value</p></th>
+          <th scope="col" [width]=250 style="vertical-align: middle;"><p class="smaller-font">Receiving date</p></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let receiving of receivings" style="text-align: center;"
+          [ngClass]="{'table-success': receiving.received, 'table-danger': !receiving.received}">
+
+          <td>
+            <input style="height: 15px; width: 15px; padding-right: 0px;" type="checkbox" name="select" 
+              [(ngModel)]="receiving.selected" (change)="this.updateSelectedReceivingsTotal()">
+          </td>
+
+          <td><a style="color: blue; cursor: pointer;"
+              (click)="openModalForEdit(receivingEdit, receiving)">{{receiving.receivingType.description}}</a></td>
+          <td>{{receiving.value | currency:"R$ "}}</td>
+          <td>{{receiving.receivedDate | date:'dd/MM/YYYY'}}</td>
+          <td style="text-align: start">
+            <button class="btn btn-grid btn-danger" (click)="delete(bill)">
+              <fa-icon [icon]="faDelete"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="loading" class="spinner-border text-primary ml-2" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
-  <div class="d-flex justify-content-center mt-2" *ngIf="pagination">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-      [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
-      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-    </pagination>
+  <div class="d-flex bd-highlight mb-3">
+    <div class="bd-highlight">
+      <button type="button" class="btn btn-add btn-success fw-bold" (click)="openModal(receivingAdd)" [openDelay]="500"
+        ngbTooltip="Add new receiving">Add receiving
+        <fa-icon class="ms-2" [icon]="faAdd"></fa-icon>
+      </button>
+    </div>
+
+    <div class="ms-auto bd-highlight mr-1">
+      <button type="button" class="btn btn-success me-1 fw-bold" (click)="receive()">Receive</button>
+    </div>
+    <div class="bd-highlight">
+      <button type="button" class="btn btn-danger" (click)="reopenReceivings()">Reopen</button>
+    </div>
+
+  </div>
+
+  <div class="d-flex bd-highlight">
+    <div class="ms-auto" *ngIf="pagination">
+      <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+      </pagination>
+    </div>
+
+    <div class="ms-auto pt-3 bd-highlight">
+      <label for="items-per-page"></label> Items per page:
+    </div>
+
+    <div class="p-2 bd-highlight">
+      <select id="items-per-page" [(ngModel)]="pageSize" (ngModelChange)="loadUser()" class="form-select rounded"
+        aria-label="Select items per page">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+      </select>
+    </div> 
   </div>
 </div>
-<!-- <pre>
-  {{bills | json}}
-</pre> -->
+
+
+
 
 <ng-template #billAdd>
   <app-bill-register (saveBillEvent)="closeModal($event)"></app-bill-register>
@@ -134,4 +236,12 @@
 
 <ng-template #billEdit>
   <app-bill-edit [bill]="selectedBill" (saveBillEvent)="closeModal($event)"></app-bill-edit>
+</ng-template>
+
+<ng-template #receivingAdd>
+  <app-receiving-register (saveReceivingEvent)="closeModal($event)"></app-receiving-register>
+</ng-template>
+
+<ng-template #receivingEdit>
+  <app-receiving-edit [receiving]="selectedReceiving" (saveReceivingEvent)="closeModal($event)"></app-receiving-edit>
 </ng-template>
