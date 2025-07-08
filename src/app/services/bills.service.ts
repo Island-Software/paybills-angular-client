@@ -48,7 +48,7 @@ export class BillsService {
     return this.http.put(this.baseUrl + 'bills/' + bill.id, bill);
   }
 
-  deleteBill(bill: Bill) {
+  delete(bill: Bill) {
     return this.http.delete(this.baseUrl + 'bills/' + bill.id);
   }  
 
