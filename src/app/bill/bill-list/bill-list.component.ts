@@ -32,10 +32,12 @@ export class BillListComponent implements OnInit {
   faDelete = faTrashCan;
   faAdd = faSquarePlus;
   faCopy = faCopy;
-  selectedBillsTotal: number = 0;
-  selectedReceivingsTotal: number = 0;
+  _selectedBillsTotal: number = 0;
+  _selectedReceivingsTotal: number = 0;
+  _selectedBalance: number = 0;
   billsTotal: number = 0;
   receivingsTotal: number = 0;
+  balanceTotal: number = 0;
   checkAllBillsState: boolean = false;
   checkAllReceivingsState: boolean = false;
 
@@ -48,6 +50,31 @@ export class BillListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
+  }
+
+  get selectedBillsTotal(): number {
+    return this._selectedBillsTotal;
+  }
+
+  set selectedBillsTotal(value: number) {
+    this._selectedBillsTotal = value;
+    this._selectedBalance = this._selectedReceivingsTotal - this._selectedBillsTotal;
+    console.log('Selected Bills Total:', this._selectedBillsTotal);
+    console.log('Selected Receivings Total:', this._selectedReceivingsTotal);
+    console.log('Balance:', this._selectedBalance);    
+  }
+
+  get selectedReceivingsTotal(): number {
+    return this._selectedReceivingsTotal;
+  }
+
+  set selectedReceivingsTotal(value: number) {
+    this._selectedReceivingsTotal = value;
+    this._selectedBalance = this._selectedReceivingsTotal - this._selectedBillsTotal;
+  }
+
+  get selectedBalance(): number {
+    return this._selectedBalance;
   }
 
   pageChanged(event: any) {
@@ -73,10 +100,16 @@ export class BillListComponent implements OnInit {
   updateTotal() {
     this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear).subscribe(bills => {
       this.billsTotal = bills.result.reduce((sum, current) => sum + current.value, 0);
+      this.updateBalance();
     });
     this.receivingService.get(this.username, this.selectedMonth, this.selectedYear).subscribe(receivings => {
       this.receivingsTotal = receivings.result.reduce((sum, current) => sum + current.value, 0);
-    });
+      this.updateBalance();
+    });    
+  }
+
+  updateBalance() {
+    this.balanceTotal = this.receivingsTotal - this.billsTotal;
   }
 
   loadUser() {
@@ -97,9 +130,15 @@ export class BillListComponent implements OnInit {
     this.updateTotal();
   }
 
-  delete(bill: Bill) {
+  deleteBill(bill: Bill) {
     if (confirm("Are you sure to delete " + bill.billType.description + "?")) {
-      this.billsService.deleteBill(bill).subscribe(_ => this.loadUser());
+      this.billsService.delete(bill).subscribe(_ => this.loadUser());
+    }
+  }
+
+  deleteReceiving(receiving: Receiving) {
+    if (confirm("Are you sure to delete " + receiving.receivingType.description + "?")) {
+      this.receivingService.delete(receiving).subscribe(_ => this.loadUser());
     }
   }
 
