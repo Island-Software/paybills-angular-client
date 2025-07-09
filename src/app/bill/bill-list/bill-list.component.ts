@@ -20,9 +20,12 @@ export class BillListComponent implements OnInit {
   receivings: Receiving[] = [];
   selectedBill?: Bill;
   selectedReceiving?: Receiving;
-  pagination: Pagination | undefined;
-  pageNumber = 1;
-  pageSize = 10;
+  paginationBills: Pagination | undefined;
+  pageNumberBills = 1;
+  pageSizeBills = 10;
+  paginationReceivings: Pagination | undefined;
+  pageNumberReceivings = 1;
+  pageSizeReceivings = 10;
   username: string = '';
   modalRef!: BsModalRef;
   months = MONTHS;
@@ -78,7 +81,7 @@ export class BillListComponent implements OnInit {
   }
 
   pageChanged(event: any) {
-    this.pageNumber = event.page;
+    this.pageNumberBills = event.page;
     this.loadUser();
   }
 
@@ -115,15 +118,16 @@ export class BillListComponent implements OnInit {
   loadUser() {
     this.loading = true;
     this.username = JSON.parse(localStorage.getItem('user')!).username;
-    this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumber, this.pageSize).subscribe(bills => {
+    this.billsService.getBills(this.username, this.selectedMonth, this.selectedYear, this.pageNumberBills, this.pageSizeBills).subscribe(bills => {
       this.bills = bills.result;
-      this.pagination = bills.pagination;
+      this.paginationBills = bills.pagination;
       this.loading = false;
     });
 
-    this.receivingService.get(this.username, this.selectedMonth, this.selectedYear, this.pageNumber, this.pageSize).subscribe(receivings => {
+    this.receivingService.get(this.username, this.selectedMonth, this.selectedYear, this.pageNumberReceivings, this.pageSizeReceivings).subscribe(receivings => {
       this.receivings = receivings.result;
-      console.log('loaded receivings', this.receivings);
+      this.paginationReceivings = receivings.pagination;
+      this.loading = false;
       
     });
 

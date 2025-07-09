@@ -105,9 +105,9 @@
     </div>
   
     <div class="d-flex bd-highlight">
-      <div class="ms-auto" *ngIf="pagination">
-        <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-          [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      <div class="ms-auto" *ngIf="paginationBills">
+        <pagination [boundaryLinks]="true" [totalItems]="paginationBills.totalItems" [itemsPerPage]="paginationBills.itemsPerPage"
+          [(ngModel)]="paginationBills.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
           nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
         </pagination>
       </div>
@@ -117,7 +117,7 @@
       </div>
   
       <div class="p-2 bd-highlight">
-        <select id="items-per-page" [(ngModel)]="pageSize" (ngModelChange)="loadUser()" class="form-select rounded"
+        <select id="items-per-page" [(ngModel)]="pageSizeBills" (ngModelChange)="loadUser()" class="form-select rounded"
           aria-label="Select items per page">
           <option value="5">5</option>
           <option value="10">10</option>
@@ -207,9 +207,9 @@
     </div>
   
     <div class="d-flex bd-highlight">
-      <div class="ms-auto" *ngIf="pagination">
-        <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-          [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      <div class="ms-auto" *ngIf="paginationReceivings">
+        <pagination [boundaryLinks]="true" [totalItems]="paginationReceivings.totalItems" [itemsPerPage]="paginationReceivings.itemsPerPage"
+          [(ngModel)]="paginationReceivings.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
           nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
         </pagination>
       </div>
@@ -219,7 +219,7 @@
       </div>
   
       <div class="p-2 bd-highlight">
-        <select id="items-per-page" [(ngModel)]="pageSize" (ngModelChange)="loadUser()" class="form-select rounded"
+        <select id="items-per-page" [(ngModel)]="pageSizeReceivings" (ngModelChange)="loadUser()" class="form-select rounded"
           aria-label="Select items per page">
           <option value="5">5</option>
           <option value="10">10</option>
