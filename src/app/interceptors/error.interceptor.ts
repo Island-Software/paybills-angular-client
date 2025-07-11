@@ -36,7 +36,8 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 401:
-              this.toastr.error('Invalid username/password');
+              this.toastr.error(error.error);
+              // this.toastr.error('Invalid username/password');
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
